@@ -1,0 +1,370 @@
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #172b4d;
+  background: #f4f7fb;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --azul: #2457d6;
+  --azul-oscuro: #173a91;
+  --texto-suave: #64748b;
+  --borde: #e3e9f2;
+  --verde: #16845b;
+  --rojo: #c43d4b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Los montos se escriben directamente; se ocultan las flechas de incremento. */
+input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(ellipse at 88% 0%, rgba(76, 124, 255, 0.13), transparent 28rem),
+    #f4f7fb;
+}
+
+header {
+  padding: 2.6rem max(1.25rem, calc((100% - 1080px) / 2)) 2.2rem;
+  color: #fff;
+  background: linear-gradient(120deg, #142b62, #2457d6);
+}
+
+header h1 {
+  margin: 0;
+  font-size: clamp(1.8rem, 4vw, 2.55rem);
+  letter-spacing: -0.04em;
+}
+
+header p {
+  margin: 0.55rem 0 0;
+  color: #dce7ff;
+}
+
+main {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 1.25rem;
+  width: min(1080px, calc(100% - 2.5rem));
+  margin: -1rem auto 3rem;
+}
+
+main > section {
+  min-width: 0;
+  padding: 1.4rem;
+  border: 1px solid rgba(227, 233, 242, 0.9);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 12px 32px rgba(24, 47, 91, 0.06);
+}
+
+main > section:first-child {
+  grid-column: 1 / -1;
+}
+
+main > section[aria-labelledby="titulo-presupuesto"],
+main > section[aria-labelledby="titulo-reporte"] { grid-column: 1 / -1; }
+main > section[aria-labelledby="titulo-formulario"],
+main > section[aria-labelledby="titulo-movimientos"] { grid-column: 1 / -1; }
+
+h2 {
+  margin: 0 0 1.1rem;
+  font-size: 1.12rem;
+  letter-spacing: -0.02em;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin: 0;
+}
+
+dl > div {
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--borde);
+  border-radius: 13px;
+  background: #fbfcff;
+}
+
+dt {
+  color: var(--texto-suave);
+  font-size: 0.84rem;
+}
+
+dd {
+  margin: 0.45rem 0 0;
+  font-size: clamp(1.25rem, 3vw, 1.7rem);
+  font-weight: 750;
+  letter-spacing: -0.04em;
+}
+
+#total-ingresos { color: var(--verde); }
+#total-gastos { color: var(--rojo); }
+.balance-negativo { color: var(--rojo); }
+
+form {
+  display: grid;
+  gap: 1rem;
+}
+
+.formulario-en-linea { display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); align-items: end; gap: 0.75rem; }
+.lista-presupuestos p { margin: 0.75rem 0 0; color: var(--texto-suave); font-size: 0.88rem; }
+.alerta-presupuesto { padding: 0.8rem 1rem; border-radius: 10px; color: #8f2633; background: #fff1f2; font-weight: 650; }
+.resumen-mensual, .comparacion-mensual { margin-top: 0.8rem; padding: 0.75rem 1rem; border-radius: 10px; background: #f7f9fd; }
+.resumen-mensual h3 { margin: 0 0 0.3rem; text-transform: capitalize; }
+.resumen-mensual p, .comparacion-mensual p { margin: 0; }
+.grafico-gastos { display: grid; gap: 0.7rem; }
+.barra-fila { display: grid; grid-template-columns: minmax(75px, 1fr) minmax(80px, 2fr) auto; align-items: center; gap: 0.7rem; font-size: 0.84rem; }
+.barra-fila > span { overflow-wrap: anywhere; }
+.barra-fondo { height: 0.8rem; overflow: hidden; border-radius: 99px; background: #e8eef9; }
+.barra-relleno { height: 100%; border-radius: inherit; background: linear-gradient(90deg, #2457d6, #62a7ff); }
+.filtros-fecha { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+.selector-resumen { display: grid; grid-template-columns: auto minmax(160px, 240px) auto minmax(150px, 200px); align-items: center; gap: 0.65rem; margin-bottom: 1rem; }
+.selector-presupuesto { display: grid; grid-template-columns: auto minmax(180px, 280px); align-items: center; gap: 0.75rem; margin: 0.5rem 0 1rem; }
+.periodo-resumen-etiqueta { margin: -0.65rem 0 1rem; color: var(--texto-suave); font-weight: 650; }
+.enlace-registro { display: inline-block; margin-top: 1rem; color: var(--azul); font-weight: 700; text-decoration: none; }
+.enlace-registro:hover { text-decoration: underline; }
+.tarjeta-presupuesto { display: grid; grid-template-columns: minmax(140px, 1fr) minmax(260px, 2fr) auto; align-items: center; gap: 0.5rem 1.25rem; margin-top: 0.75rem; padding: 1rem 1.2rem; border: 1px solid var(--borde); border-radius: 12px; background: #fbfcff; }
+.tarjeta-presupuesto > strong { font-size: 1.05rem; }
+.tarjeta-presupuesto .presupuesto-detalle { color: #34445f; font-size: 1rem; font-weight: 750; }
+.tarjeta-presupuesto progress { grid-column: 1 / -1; width: 100%; height: 1rem; accent-color: var(--azul); }
+.tarjeta-presupuesto .alerta-presupuesto { grid-column: 1 / -1; margin: 0; }
+.tarjeta-presupuesto .eliminar-presupuesto { grid-column: 1; justify-self: start; padding: 0.45rem 0.8rem; color: #9f2431; background: #fff1f2; }
+.tarjeta-presupuesto .mes-presupuesto { grid-column: 3; justify-self: end; color: var(--texto-suave); font-size: 0.82rem; text-transform: capitalize; }
+.tabla-comparacion { width: 100%; margin-top: 1rem; border-collapse: collapse; text-align: left; }
+.tabla-comparacion th, .tabla-comparacion td { padding: 0.8rem; border-bottom: 1px solid var(--borde); }
+.tabla-comparacion th { color: var(--texto-suave); background: #f7f9fd; text-transform: capitalize; }
+
+form > div,
+section > div {
+  display: grid;
+  gap: 0.4rem;
+}
+
+label {
+  color: #34445f;
+  font-size: 0.86rem;
+  font-weight: 650;
+}
+
+input,
+select {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #d6deea;
+  border-radius: 9px;
+  color: #172b4d;
+  background: #fff;
+  font: inherit;
+}
+
+input:focus,
+select:focus,
+button:focus-visible {
+  outline: 3px solid rgba(36, 87, 214, 0.2);
+  outline-offset: 2px;
+  border-color: var(--azul);
+}
+
+button {
+  min-height: 2.65rem;
+  padding: 0.55rem 0.85rem;
+  border: 0;
+  border-radius: 9px;
+  color: #fff;
+  background: var(--azul);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 120ms ease, transform 120ms ease;
+}
+
+button:hover {
+  background: var(--azul-oscuro);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+form > button[type="submit"] {
+  margin-top: 0.2rem;
+}
+
+.boton {
+  min-height: 2.25rem;
+  padding: 0.4rem 0.65rem;
+  font-size: 0.8rem;
+}
+
+.boton-secundario {
+  border: 1px solid #d6deea;
+  color: #34445f;
+  background: #fff;
+}
+
+.boton-secundario:hover {
+  background: #f1f5fb;
+}
+
+.boton-peligro {
+  color: #a72f3d;
+  background: #fff1f2;
+}
+
+.boton-peligro:hover {
+  color: #fff;
+  background: #b83242;
+}
+
+section[aria-labelledby="titulo-movimientos"] > div {
+  margin-bottom: 0.8rem;
+}
+
+#lista-movimientos {
+  display: grid;
+  gap: 0.7rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.movimiento {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.9rem;
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+}
+
+.movimiento-informacion {
+  display: grid;
+  gap: 0.28rem;
+  min-width: 0;
+}
+
+.movimiento-informacion strong {
+  overflow-wrap: anywhere;
+}
+
+.movimiento-informacion span {
+  color: var(--texto-suave);
+  font-size: 0.8rem;
+}
+
+.movimiento-monto {
+  white-space: nowrap;
+  font-size: 0.93rem;
+}
+
+.movimiento-ingreso .movimiento-monto { color: var(--verde); }
+.movimiento-gasto .movimiento-monto { color: var(--rojo); }
+
+.movimiento-acciones {
+  display: flex;
+  gap: 0.4rem;
+}
+
+#mensaje-vacio {
+  margin: 1.1rem 0 0;
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+}
+
+#mensaje-estado {
+  grid-column: 1 / -1;
+  min-height: 1.2rem;
+  margin: -0.65rem 0 0;
+  color: var(--verde);
+  font-size: 0.9rem;
+}
+
+#mensaje-estado:empty {
+  display: none;
+}
+
+.mensaje-error {
+  color: var(--rojo) !important;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 760px) {
+  main {
+    grid-template-columns: 1fr;
+  }
+
+  main > section:first-child {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 520px) {
+  main {
+    width: min(100% - 1.25rem, 1080px);
+    gap: 0.8rem;
+    margin-top: -0.8rem;
+  }
+
+  main > section {
+    padding: 1rem;
+    border-radius: 14px;
+  }
+
+  dl {
+    gap: 0.45rem;
+  }
+
+  .selector-resumen { grid-template-columns: 1fr; }
+  .selector-presupuesto { grid-template-columns: 1fr; }
+  .tarjeta-presupuesto { grid-template-columns: 1fr; }
+  .tarjeta-presupuesto .eliminar-presupuesto, .tarjeta-presupuesto .mes-presupuesto { grid-column: 1; }
+  .tarjeta-presupuesto .mes-presupuesto { justify-self: end; }
+  .tabla-comparacion th, .tabla-comparacion td { padding: 0.5rem 0.35rem; font-size: 0.78rem; }
+
+  dl > div {
+    padding: 0.75rem 0.6rem;
+  }
+
+  dt {
+    font-size: 0.74rem;
+  }
+
+  .movimiento {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .movimiento-acciones {
+    grid-column: 1 / -1;
+    justify-content: flex-end;
+  }
+}
+
+@media print {
+  body { background: #fff; }
+  header { padding: 1rem; color: #172b4d; background: #fff; }
+  header p, main > section[aria-labelledby="titulo-formulario"], main > section[aria-labelledby="titulo-movimientos"], #mensaje-estado, #exportar-pdf, #confirmar-comparacion, .selector-resumen, .selector-presupuesto, #formulario-presupuesto, .campos-comparacion, .enlace-registro { display: none !important; }
+  main { display: block; width: 100%; margin: 0; }
+  main > section:first-child, main > section[aria-labelledby="titulo-presupuesto"], main > section[aria-labelledby="titulo-reporte"] { border: 0; box-shadow: none; }
+  main > section:first-child dl > div { background: #fff; }
+}

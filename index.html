@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Registra tus ingresos y gastos personales."
+    />
+    <title>Control de gastos</title>
+    <link rel="stylesheet" href="./src/styles/styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Control de gastos</h1>
+      <p>Registra tus ingresos y gastos en un solo lugar.</p>
+    </header>
+
+    <main>
+      <section aria-labelledby="titulo-resumen">
+        <h2 id="titulo-resumen">Resumen</h2>
+        <p id="periodo-resumen-etiqueta" class="periodo-resumen-etiqueta"></p>
+        <div class="selector-resumen"><label for="periodo-resumen">Periodo del resumen</label><select id="periodo-resumen"><option value="mes">Mes seleccionado</option><option value="todos">Todos los meses</option></select><label for="mes-resumen">Mes</label><input id="mes-resumen" type="month" /></div>
+        <dl>
+          <div>
+            <dt>Ingresos</dt>
+            <dd id="total-ingresos">$0.00</dd>
+          </div>
+          <div>
+            <dt>Gastos</dt>
+            <dd id="total-gastos">$0.00</dd>
+          </div>
+          <div>
+            <dt>Balance</dt>
+            <dd id="balance">$0.00</dd>
+          </div>
+        </dl>
+        <h3>Gastos por categoría</h3>
+        <div id="grafico-gastos" class="grafico-gastos" role="img" aria-label="Gráfico de gastos por categoría"></div>
+        <a class="enlace-registro" href="#seccion-registro">Registrar movimiento nuevo</a>
+      </section>
+
+      <section aria-labelledby="titulo-presupuesto">
+        <h2 id="titulo-presupuesto">Presupuesto mensual por categoría</h2>
+        <div class="selector-presupuesto"><label for="filtro-presupuesto-mes">Mostrar presupuestos de</label><select id="filtro-presupuesto-mes"></select></div>
+        <form id="formulario-presupuesto" class="formulario-en-linea">
+          <div><label for="presupuesto-mes">Mes</label><input id="presupuesto-mes" type="month" required /></div>
+          <div><label for="presupuesto-categoria">Categoría de gasto</label><select id="presupuesto-categoria" required>
+            <option value="comida">Comida</option><option value="transporte">Transporte</option><option value="gastos personales">Gastos personales</option><option value="gustos">Gustos</option><option value="vivienda">Vivienda</option><option value="servicios">Servicios</option><option value="salud">Salud</option><option value="educación">Educación</option><option value="entretenimiento">Entretenimiento</option><option value="otro">Otro</option>
+          </select><input id="presupuesto-categoria-otro" maxlength="40" placeholder="Escribe la categoría" hidden /></div>
+          <div><label for="presupuesto-monto">Monto máximo</label><input id="presupuesto-monto" type="number" min="0.01" step="0.01" placeholder="Ej.: 250" required /></div>
+          <button type="submit">Guardar presupuesto</button>
+        </form>
+        <div id="lista-presupuestos" class="lista-presupuestos"></div>
+      </section>
+
+      <section aria-labelledby="titulo-reporte">
+        <h2 id="titulo-reporte">Comparación de meses</h2>
+        <div class="formulario-en-linea campos-comparacion">
+          <div><label for="mes-comparar-desde">Primer mes</label><input id="mes-comparar-desde" type="month" /></div>
+          <div><label for="mes-comparar-hasta">Segundo mes</label><input id="mes-comparar-hasta" type="month" /></div>
+          <button id="confirmar-comparacion" type="button">Comparar meses</button>
+          <button id="exportar-pdf" type="button">Exportar reporte a PDF</button>
+        </div>
+        <div id="comparacion-mensual" class="comparacion-mensual"></div>
+      </section>
+
+      <section id="seccion-registro" aria-labelledby="titulo-formulario">
+        <h2 id="titulo-formulario">Registrar movimiento</h2>
+        <form id="formulario-movimiento">
+          <div>
+            <label for="tipo">Tipo</label>
+            <select id="tipo" name="tipo" required>
+              <option value="gasto">Gasto</option>
+              <option value="ingreso">Ingreso</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="monto">Monto</label>
+            <input
+              id="monto"
+              name="monto"
+              type="number"
+              min="0.01"
+              step="0.01"
+              placeholder="Ej.: 25.00"
+              required
+            />
+          </div>
+
+          <div>
+            <label for="categoria">Categoría</label>
+            <select
+              id="categoria"
+              name="categoria"
+              required
+            ></select>
+            <input id="categoria-otro" type="text" maxlength="40" placeholder="Escribe la categoría" hidden />
+          </div>
+
+          <div>
+            <label for="descripcion">Descripción (opcional)</label>
+            <input id="descripcion" name="descripcion" type="text" maxlength="160" placeholder="Añade un detalle" />
+          </div>
+
+          <div>
+            <label for="fecha">Fecha</label>
+            <input id="fecha" name="fecha" type="date" required />
+          </div>
+
+          <button type="submit">Guardar movimiento</button>
+          <button id="cancelar-edicion" type="button" class="boton boton-secundario" hidden>
+            Cancelar edición
+          </button>
+        </form>
+      </section>
+
+      <section aria-labelledby="titulo-movimientos">
+        <h2 id="titulo-movimientos">Movimientos</h2>
+
+        <div>
+          <label for="filtro-tipo">Filtrar por tipo</label>
+          <select id="filtro-tipo" name="filtro-tipo">
+            <option value="todos">Todos</option>
+            <option value="ingreso">Ingresos</option>
+            <option value="gasto">Gastos</option>
+          </select>
+        </div>
+
+        <div class="filtros-fecha">
+          <div><label for="filtro-desde">Desde</label><input id="filtro-desde" type="date" /></div>
+          <div><label for="filtro-hasta">Hasta</label><input id="filtro-hasta" type="date" /></div>
+        </div>
+
+        <div>
+          <label for="filtro-categoria">Filtrar por categoría</label>
+            <select
+            id="filtro-categoria"
+            name="filtro-categoria"
+            ><option value="">Todas las categorías</option></select>
+        </div>
+
+        <div>
+          <label for="busqueda-movimientos">Buscar en categoría o descripción</label>
+          <input id="busqueda-movimientos" type="search" placeholder="Escribe para buscar" />
+        </div>
+
+        <p id="mensaje-vacio">Todavía no hay movimientos registrados.</p>
+        <ul id="lista-movimientos" aria-live="polite"></ul>
+      </section>
+
+      <p id="mensaje-estado" role="status" aria-live="polite"></p>
+    </main>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
+
